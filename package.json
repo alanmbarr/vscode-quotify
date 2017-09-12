@@ -1,0 +1,50 @@
+{
+    "name": "quotify",
+    "displayName": "quotify",
+    "description": "Convert a delimited list of strings to double quoted delimited strings",
+    "version": "0.0.1",
+    "publisher": "alanmbarr",
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.quotifyQuoteStrings",
+        "onCommand:extension.quotifyUnquoteStrings",
+        "onCommand:extension.quotifyNewlineStrings"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.quotifyQuoteStrings",
+                "title": "Quote Strings"
+            },
+            {
+                "command": "extension.quotifyUnquoteStrings",
+                "title": "Unquote Strings"
+            },
+            {
+                "command": "extension.quotifyNewlineStrings",
+                "title": "Newline Delimit Strings"
+            }
+
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5",
+        "mocha": "^3.5.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
