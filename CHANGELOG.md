@@ -1,8 +1,9 @@
 # Change Log
 All notable changes to the "quotify" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [0.0.2]
+- Changes to package only no code changes
 
-## [Unreleased]
+## [0.0.1]
 - Initial release
 - Added functions to quote,  unquote, and newline delimit strings selected in editor

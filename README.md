@@ -11,7 +11,8 @@ Quotes selected strings, unquotes, and separates with newlines
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.2
+Added example gif, updated package.json data, license, etc
 
 ### 0.0.1
 
