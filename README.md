@@ -11,6 +11,6 @@ Quotes selected strings, unquotes, and separates with newlines
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
 Initial release of Quotify
