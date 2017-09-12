@@ -4,6 +4,7 @@
     "description": "Convert a delimited list of strings to double quoted delimited strings",
     "version": "0.0.1",
     "publisher": "alanmbarr",
+    "icon": "images/quotation-marks.png",
     "engines": {
         "vscode": "^1.16.0"
     },
@@ -46,5 +47,14 @@
         "mocha": "^3.5.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alanmbarr/vscode-quotify.git"
+    },
+    "author": "Alan Barr",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/bengreenier/vscode-quotify/issues"
     }
 }
