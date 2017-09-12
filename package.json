@@ -2,7 +2,7 @@
     "name": "quotify",
     "displayName": "quotify",
     "description": "Convert a delimited list of strings to double quoted delimited strings",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "alanmbarr",
     "icon": "images/quotation-marks.png",
     "engines": {
@@ -31,7 +31,6 @@
                 "command": "extension.quotifyNewlineStrings",
                 "title": "Newline Delimit Strings"
             }
-
         ]
     },
     "scripts": {
@@ -55,6 +54,6 @@
     "author": "Alan Barr",
     "license": "MIT",
     "bugs": {
-      "url": "https://github.com/bengreenier/vscode-quotify/issues"
+        "url": "https://github.com/bengreenier/vscode-quotify/issues"
     }
 }
