@@ -1,4 +1,6 @@
 # quotify README
+[![Travis](https://travis-ci.org/alanmbarr/vscode-quotify.svg?branch=master)](https://travis-ci.org/alanmbarr/vscode-quotify)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/j7k6toji4go5o6bj?svg=true)](https://ci.appveyor.com/project/alanmbarr/vscode-quotify)
 
 Quotify adds the ability to quote, unquote, and delimit with new lines text.
 This is very specific but a really common issue I run into when I am using powershell to list server hostnames.
