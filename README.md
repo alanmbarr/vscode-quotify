@@ -13,6 +13,9 @@ Quotes selected strings, unquotes, and separates with newlines
 
 ## Release Notes
 
+### 0.0.3
+Security updates, comma newline delimit
+
 ### 0.0.2
 Added example gif, updated package.json data, license, etc
 
