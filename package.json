@@ -2,7 +2,7 @@
     "name": "quotify",
     "displayName": "quotify",
     "description": "Convert a delimited list of strings to double quoted delimited strings",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "alanmbarr",
     "icon": "images/quotation-marks.png",
     "engines": {
