@@ -6,14 +6,16 @@ export function activate(context: vscode.ExtensionContext) {
     let quote = vscode.commands.registerCommand('extension.quotifyQuoteStrings', () => quoteStrings());
     let unquote = vscode.commands.registerCommand('extension.quotifyUnquoteStrings', () => unquoteStrings());
     let newline = vscode.commands.registerCommand('extension.quotifyNewlineStrings', () => newLineStrings());
+    let commaNewLine = vscode.commands.registerCommand('extension.quotifyCommaNewlineStrings', () => commaNewLineStrings());
     let arrayString = vscode.commands.registerCommand('extension.buildArrayString', () => buildArrayString());
-    let sqlSetString = vscode.commands.registerCommand('extension.buildSqlSetString', () => buildSqlSetString());
+    // let sqlSetString = vscode.commands.registerCommand('extension.buildSqlSetString', () => buildSqlSetString());
 
     context.subscriptions.push(quote);
     context.subscriptions.push(unquote);
     context.subscriptions.push(newline);
+    context.subscriptions.push(commaNewLine);
     context.subscriptions.push(arrayString);
-    context.subscriptions.push(sqlSetString);
+    // context.subscriptions.push(sqlSetString);
 }
 
 export function deactivate() {
@@ -37,23 +39,23 @@ function buildArrayString() {
     editor.revealRange(range);
 }
 
-function buildSqlSetString() {
-    let editor = vscode.window.activeTextEditor;
-    let range;
-    if (!editor.selection.isEmpty) {
-        range = editor.selection;
-    } else {
-        vscode.window.showErrorMessage("No text selected");
-        return;
-    }
+// function buildSqlSetString() {
+//     let editor = vscode.window.activeTextEditor;
+//     let range;
+//     if (!editor.selection.isEmpty) {
+//         range = editor.selection;
+//     } else {
+//         vscode.window.showErrorMessage("No text selected");
+//         return;
+//     }
 
-    let text = editor.document.getText(range);
-    let result = '(' + arrayToSqlSetString(splitByCommaOrNewLine(text)) + ')';
-    editor.edit((builder) => {
-        builder.replace(range, result);
-    });
-    editor.revealRange(range);
-}
+//     let text = editor.document.getText(range);
+//     let result = arrayToSqlSetString(splitByCommaOrNewLine(text));
+//     editor.edit((builder) => {
+//         builder.replace(range, result);
+//     });
+//     editor.revealRange(range);
+// }
 
 function quoteStrings () {
     let editor = vscode.window.activeTextEditor;
@@ -85,6 +87,24 @@ function unquoteStrings () {
 
     let text = editor.document.getText(range);
     let result = arrayToUnquotedString(splitByCommaOrNewLine(text));
+    editor.edit((builder) =>{
+        builder.replace(range,result);
+    });
+    editor.revealRange(range);
+}
+
+function commaNewLineStrings () {
+    let editor = vscode.window.activeTextEditor;
+    let range;
+    if (!editor.selection.isEmpty) {
+        range = editor.selection;
+    } else {
+        vscode.window.showErrorMessage("No text selected");
+        return;
+    }
+
+    let text = editor.document.getText(range);
+    let result = commaNewLineify(splitByCommaOrNewLine(text));
     editor.edit((builder) =>{
         builder.replace(range,result);
     });
@@ -127,18 +147,21 @@ export function splitByCommaOrNewLine (text: string): Array<string> {
  * Ghetto escape and single quote array of strings
  * @param strings array of strings to convert
  */
-export function arrayToSqlSetString(strings: Array<string>): string {
-    return strings.filter((el) => {
-        return el.trim() !== ""
-    })
-        .map((str, idx, arr) => {
-            let last = arr.length - 1;
-            return idx === last ? `'${str.trim().replace('\'', '\'\'')}'` : `'${str.trim().replace('\'', '\'\'')}',`;
-        }).reverse()
-        .reduce((curr, prev): string => {
-            return prev += `${curr}`;
-        }, "");
-}
+// export function arrayToSqlSetString(strings: Array<string>): string {
+//     var strings = arrayToUnquotedString(strings).split(",");
+//     var result = strings.filter((el) => {
+//         return el.trim() !== ""
+//     })
+//     .map((str, idx, arr) => {
+//         let last = arr.length - 1;
+//         return idx === last ? `'${str.trim().replace('\'', '\'\'')}'` : `'${str.trim().replace('\'', '\'\'')}',`;
+//     }).reverse()
+//     .reduce((curr, prev): string => {
+//         return prev += `${curr}`;
+//     }, "");
+
+//     return '(' + result + ')';
+// }
 
 export function arrayToQuotedString (strings: Array<string>) : string {
     return strings.filter((el)=>{
@@ -161,6 +184,20 @@ export function arrayToUnquotedString (strings: Array<string>) : string {
        let last = arr.length - 1;
        let replace = `${str.trim().replace(/^"(.*)"$/, '$1')}`; 
        return idx === last ? replace : replace + ',';
+    }).reverse()
+    .reduce((curr,prev) : string => {
+        return prev += `${curr}`;
+    },"");
+}
+
+export function commaNewLineify (strings: Array<string>) : string {
+    return strings.filter((el)=>{
+        return el.trim() !== ""
+    })
+    .map((str,idx, arr)=>{
+       let last = arr.length - 1;
+       let replace = `${str.trim().replace(/^"(.*)"$/, '$1')}`; 
+       return idx === last ? replace+'\n' : replace + ',\n';
     }).reverse()
     .reduce((curr,prev) : string => {
         return prev += `${curr}`;
