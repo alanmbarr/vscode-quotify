@@ -2,8 +2,9 @@
 All notable changes to the "quotify" extension will be documented in this file.
 
 ## [0.0.3]
-- Added simple command to convert a group of lines to a JS style array and comma newline delmited text
+- Comma newline delmited text
 - Have a sql list but need more robust testing around it and escaping single ticks
+- Same for JSON stringifying but need more testing before releasing
 
 ## [0.0.2]
 - Changes to package only no code changes

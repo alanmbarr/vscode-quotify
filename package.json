@@ -15,8 +15,7 @@
         "onCommand:extension.quotifyQuoteStrings",
         "onCommand:extension.quotifyUnquoteStrings",
         "onCommand:extension.quotifyNewlineStrings",
-        "onCommand:extension.quotifyCommaNewlineStrings",
-        "onCommand:extension.buildArrayString"
+        "onCommand:extension.quotifyCommaNewlineStrings"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -36,14 +35,6 @@
             {
                 "command": "extension.quotifyCommaNewlineStrings",
                 "title": "Comma Newline Delimit Strings"
-            },
-            {
-                "command": "extension.buildArrayString",
-                "title": "Convert to JS Array"
-            },
-            {
-                "command": "extension.buildSqlSetString",
-                "title": "Convert to SQL Set"
             }
         ]
     },
