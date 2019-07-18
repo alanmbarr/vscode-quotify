@@ -13,6 +13,9 @@ Quotes selected strings, unquotes, and separates with newlines
 
 ## Release Notes
 
+### 0.0.4
+Allow user to select their choice of quote to use during quotification process
+
 ### 0.0.3
 Security updates, comma newline delimit
 

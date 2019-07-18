@@ -2,7 +2,7 @@
     "name": "quotify",
     "displayName": "quotify",
     "description": "Convert a delimited list of strings to double quoted delimited strings",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "alanmbarr",
     "icon": "images/quotation-marks.png",
     "engines": {
@@ -22,19 +22,19 @@
         "commands": [
             {
                 "command": "extension.quotifyQuoteStrings",
-                "title": "Quote Strings"
+                "title": "Quotify: Quote Strings"
             },
             {
                 "command": "extension.quotifyUnquoteStrings",
-                "title": "Unquote Strings"
+                "title": "Quotify: Unquote Strings"
             },
             {
                 "command": "extension.quotifyNewlineStrings",
-                "title": "Newline Delimit Strings"
+                "title": "Quotify: Newline Delimit Strings"
             },
             {
                 "command": "extension.quotifyCommaNewlineStrings",
-                "title": "Comma Newline Delimit Strings"
+                "title": "Quotify: Comma Newline Delimit Strings"
             }
         ]
     },
