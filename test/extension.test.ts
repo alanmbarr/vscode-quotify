@@ -1,6 +1,5 @@
 import * as assert from 'assert';
 
-import * as vscode from 'vscode';
 import * as ext from '../src/extension';
 
 suite("Extension Tests", () => {
@@ -21,7 +20,7 @@ suite("Extension Tests", () => {
 
     test("quotes are added", () => {
         let text = ext.splitByCommaOrNewLine(`a,b,c,d,e,f,g`);
-        let quotes = ext.arrayToQuotedString(text)
+        let quotes = ext.arrayToQuotedString(text, '\"')
         assert.equal(quotes.includes('"'), true);
         assert.equal(quotes.includes('\n'), false);
         assert.equal(quotes.split('').filter((e)=>{return e === '"'}).length, 14);
@@ -29,8 +28,15 @@ suite("Extension Tests", () => {
 
     test("quotes are removed", () => {
         let text = ext.splitByCommaOrNewLine(`"a","b","c","d",'e',"f",'g'`);
-        let quotes = ext.arrayToUnquotedString(text)
+        let quotes = ext.arrayToUnquotedString(text, '\"')
         assert.equal(quotes.includes('"'), false);
+        assert.equal(quotes.includes('"'), false);
+        assert.equal(quotes.includes('\n'), false);
+    });
+
+    test("quotes are removed", () => {
+        let text = ext.splitByCommaOrNewLine(`'a','b','c','d','e','f','g'`);
+        let quotes = ext.arrayToUnquotedString(text, '\"')
         assert.equal(quotes.includes('"'), false);
         assert.equal(quotes.includes('\n'), false);
     });

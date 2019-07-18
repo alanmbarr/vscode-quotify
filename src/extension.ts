@@ -1,5 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
+import { inputQuotes } from './inputQuotes';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -57,8 +58,13 @@ export function deactivate() {
 //     editor.revealRange(range);
 // }
 
-function quoteStrings () {
+async function quoteStrings () {
     let editor = vscode.window.activeTextEditor;
+    if (editor == null) {
+        vscode.window.showErrorMessage("No text editor open");
+        return;
+    }
+
     let range;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
@@ -67,16 +73,24 @@ function quoteStrings () {
         return;
     }
 
+    // Get User's choice of quote
+    var input = await inputQuotes();
+
     let text = editor.document.getText(range);
-    let result = arrayToQuotedString(splitByCommaOrNewLine(text));
+    let result = arrayToQuotedString(splitByCommaOrNewLine(text), input);
     editor.edit((builder) =>{
         builder.replace(range,result);
     });
     editor.revealRange(range);
 }
 
-function unquoteStrings () {
+async function unquoteStrings () {
     let editor = vscode.window.activeTextEditor;
+    if (editor == null) {
+        vscode.window.showErrorMessage("No text editor open");
+        return;
+    }
+
     let range;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
@@ -85,8 +99,11 @@ function unquoteStrings () {
         return;
     }
 
+    // Get User's choice of quote
+    var input = await inputQuotes();
+
     let text = editor.document.getText(range);
-    let result = arrayToUnquotedString(splitByCommaOrNewLine(text));
+    let result = arrayToUnquotedString(splitByCommaOrNewLine(text), input);
     editor.edit((builder) =>{
         builder.replace(range,result);
     });
@@ -95,6 +112,11 @@ function unquoteStrings () {
 
 function commaNewLineStrings () {
     let editor = vscode.window.activeTextEditor;
+    if (editor == null) {
+        vscode.window.showErrorMessage("No text editor open");
+        return;
+    }
+
     let range;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
@@ -113,6 +135,11 @@ function commaNewLineStrings () {
 
 function newLineStrings () {
     let editor = vscode.window.activeTextEditor;
+    if (editor == null) {
+        vscode.window.showErrorMessage("No text editor open");
+        return;
+    }
+
     let range;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
@@ -163,26 +190,27 @@ export function splitByCommaOrNewLine (text: string): Array<string> {
 //     return '(' + result + ')';
 // }
 
-export function arrayToQuotedString (strings: Array<string>) : string {
+export function arrayToQuotedString (strings: Array<string>, quoteChar: string) : string {
     return strings.filter((el)=>{
         return el.trim() !== ""
     })
     .map((str,idx, arr)=>{
        let last = arr.length - 1;
-       return idx === last ? `"${str.trim()}"` : `"${str.trim()}",`;
+       return idx === last ? `${quoteChar}${str.trim()}${quoteChar}` : `${quoteChar}${str.trim()}${quoteChar},`;
     }).reverse()
     .reduce((curr,prev) : string => {
         return prev += `${curr}`;
     },"");
 }
 
-export function arrayToUnquotedString (strings: Array<string>) : string {
+export function arrayToUnquotedString (strings: Array<string>, quoteChar: string) : string {
     return strings.filter((el)=>{
         return el.trim() !== ""
     })
     .map((str,idx, arr)=>{
        let last = arr.length - 1;
-       let replace = `${str.trim().replace(/^"(.*)"$/, '$1')}`; 
+       let pattern = quoteChar === '\'' ? /^'(.*)'$/ : /^"(.*)"$/;
+       let replace = `${str.trim().replace(pattern, '$1')}`; 
        return idx === last ? replace : replace + ',';
     }).reverse()
     .reduce((curr,prev) : string => {
