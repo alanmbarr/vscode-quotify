@@ -3,11 +3,19 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.15.1'
+    displayName: 'Use Node.js 10.15.1'
   - script: npm ci
   - script: npm run test
 - job: Windows
   pool:
     vmImage: 'windows-2019'
   steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.15.1'
+    displayName: 'Use Node.js 10.15.1'
   - script: npm ci
   - script: npm run test
