@@ -1,5 +1,7 @@
 # Change Log
 All notable changes to the "quotify" extension will be documented in this file.
+## [0.0.5]
+- Updated vscode libraries but no real changes.
 
 ## [0.0.4]
 - Prefix all commands with word 'Quotify'
