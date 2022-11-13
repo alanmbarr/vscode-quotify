@@ -25,7 +25,7 @@ async function quoteStrings () {
         return;
     }
 
-    let range;
+    let range: vscode.Range | vscode.Position | undefined;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
     } else {
@@ -37,9 +37,12 @@ async function quoteStrings () {
     var input = await inputQuotes();
 
     let text = editor.document.getText(range);
-    let result = arrayToQuotedString(splitByCommaOrNewLine(text), input);
+    let result = arrayToQuotedString(splitByCommaOrNewLine(text), input!);
+    var firstLine = editor.document.lineAt(0);
+    var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+    var textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
     editor.edit((builder) =>{
-        builder.replace(range,result);
+        builder.replace(textRange,result);
     });
     editor.revealRange(range);
 }
@@ -51,7 +54,7 @@ async function unquoteStrings () {
         return;
     }
 
-    let range;
+    let range: vscode.Range | vscode.Position | undefined;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
     } else {
@@ -63,9 +66,13 @@ async function unquoteStrings () {
     var input = await inputQuotes();
 
     let text = editor.document.getText(range);
-    let result = arrayToUnquotedString(splitByCommaOrNewLine(text), input);
+    let result = arrayToUnquotedString(splitByCommaOrNewLine(text), input!);
+    var firstLine = editor.document.lineAt(0);
+    var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+    var textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
     editor.edit((builder) =>{
-        builder.replace(range,result);
+        //builder.replace(range,result);
+        builder.replace(textRange,result);
     });
     editor.revealRange(range);
 }
@@ -77,7 +84,7 @@ function commaNewLineStrings () {
         return;
     }
 
-    let range;
+    let range: vscode.Range | vscode.Position | undefined;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
     } else {
@@ -87,8 +94,11 @@ function commaNewLineStrings () {
 
     let text = editor.document.getText(range);
     let result = commaNewLineify(splitByCommaOrNewLine(text));
+    var firstLine = editor.document.lineAt(0);
+    var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+    var textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
     editor.edit((builder) =>{
-        builder.replace(range,result);
+        builder.replace(textRange,result);
     });
     editor.revealRange(range);
 }
@@ -100,7 +110,7 @@ function newLineStrings () {
         return;
     }
 
-    let range;
+    let range: vscode.Range | vscode.Position | undefined;
     if (!editor.selection.isEmpty) {
         range = editor.selection;
     } else {
@@ -110,8 +120,11 @@ function newLineStrings () {
 
     let text = editor.document.getText(range);
     let result = newLineify(splitByCommaOrNewLine(text));
+    var firstLine = editor.document.lineAt(0);
+    var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+    var textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
     editor.edit((builder) =>{
-        builder.replace(range,result);
+        builder.replace(textRange,result);
     });
     editor.revealRange(range);
 }

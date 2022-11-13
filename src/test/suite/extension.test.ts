@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 
-import * as ext from '../src/extension';
+import * as ext from '../../extension';
 
 suite("Extension Tests", () => {
 
