@@ -5,7 +5,6 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '18.11.9'
       checkLatest: true
     displayName: 'Use Node.js latest'
   - script: npm ci
@@ -16,7 +15,7 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '18.11.9'
+      checkLatest: true
     displayName: 'Use Node.js latest'
   - script: npm ci
   - script: npm run test
